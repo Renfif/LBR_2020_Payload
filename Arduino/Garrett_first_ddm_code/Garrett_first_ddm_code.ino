@@ -47,6 +47,21 @@ void loop() {
         
     }
 
+/*
+Pseudocodeland:
+
+ch1 number = some number
+if ch1# > 0:
+    loop
+        a = ch1#
+        wait
+        b = ch1#(new one)
+        c = b-a
+        if c < 100:
+            ch1real = a
+*/
+
+
 }
 
 
