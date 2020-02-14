@@ -1,0 +1,21 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "C:\\Users\\raidr\\Documents\\Arduino\\libraries\\Drive",
+                "C:\\Users\\raidr\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.2\\libraries\\Wire\\src",
+                "C:\\Users\\raidr\\Documents\\Arduino\\libraries\\SparkFun_MMA8452Q_Accelerometer\\src",
+                "C:\\Program Files (x86)\\Arduino\\tools\\**",
+                "C:\\Program Files (x86)\\Arduino\\hardware\\arduino\\avr\\**",
+                "C:\\Users\\raidr\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.2\\**",
+                "C:\\Users\\raidr\\AppData\\Local\\Arduino15\\packages\\arduino\\tools\\**"
+            ],
+            "forcedInclude": [
+                "C:\\Users\\raidr\\AppData\\Local\\Arduino15\\packages\\arduino\\hardware\\avr\\1.8.2\\cores\\arduino\\Arduino.h"
+            ],
+            "intelliSenseMode": "msvc-x64"
+        }
+    ],
+    "version": 4
+}
