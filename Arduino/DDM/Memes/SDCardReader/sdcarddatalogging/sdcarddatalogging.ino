@@ -6,6 +6,18 @@
 MPU6050 mpu6050(Wire);
 const int chipSelect = 4;
 
+/*
+ * 6055 pins:
+ * VCC & GND to arduino 5V and GND rail
+ * SCL to A5, SDA to A4
+ * INT to digital 2
+ * SD-Card breakout pins:
+ * VCC & GND to arduino 5V and GND rail
+ * MISO to digital 12, MOSI to digital 11 
+ * SCK to digital 13
+ * CS(chip select) to digital 4
+ */
+
 void setup() {
     // Open serial communications
     Serial.begin(9600);
@@ -13,9 +25,10 @@ void setup() {
     mpu6050.begin();
     mpu6050.calcGyroOffsets(true);
 
-    while (!Serial) {
-        ; // wait for serial port to connect
-    }
+//    //FOR TESTING PURPOSES ONLY
+//    while (!Serial) {
+//        ; // wait for serial port to connect
+//    }
 
     Serial.print("Initializing SD card...");
 
@@ -25,6 +38,13 @@ void setup() {
         while (1);
     }
     Serial.println("card initialized.");
+    //---------------------------
+    //start of file print
+    File dataFile = SD.open("datalog.txt", FILE_WRITE);
+    if (dataFile) {
+        dataFile.println("Data Log Start");
+        dataFile.close();
+    }
 }
 
 void loop() {
@@ -33,12 +53,10 @@ void loop() {
 
     //mpu data retrieval
     mpu6050.update();
-    Serial.print("angleX : ");
-    Serial.print(mpu6050.getAngleX());
-    Serial.print("\tangleY : ");
-    Serial.print(mpu6050.getAngleY());
-    Serial.print("\tangleZ : ");
-    Serial.println(mpu6050.getAngleZ());
+//    Serial.print(mpu6050.getAngleX());
+//    Serial.print(mpu6050.getAngleY());
+//    Serial.println(mpu6050.getAngleZ());
+    dataString += String (mpu6050.getAngleX());
     //------
 
     // open the file. note that only one file can be open at a time,
