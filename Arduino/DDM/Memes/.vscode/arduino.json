@@ -1,0 +1,6 @@
+{
+    "sketch": "SDCardReader\\sdcardtest.ino",
+    "board": "arduino:avr:uno",
+    "port": "COM12",
+    "programmer": "AVRISP mkII"
+}
