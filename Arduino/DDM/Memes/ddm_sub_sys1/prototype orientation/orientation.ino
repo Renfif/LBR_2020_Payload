@@ -1,14 +1,17 @@
 #include <MPU6050_tockn.h>
 #include <Wire.h>
-#include <Drive>
-#include <AutoPID>
+#include <Drive.h>
+#include <AutoPID.h>
 
 #define EnA 9
-#define In1 6
-#define In2 7
+const int IN1 = 6;
+const int IN2 = 7;
+const int IN3;
+const int IN4;
+boolean toggle = false;
 
 MPU6050 mpu6050(Wire);
-Drive drive(In1,In2)
+Drive drive(IN1,IN2,IN3,IN4);
 
 /*
  * 6055 pins:
@@ -21,7 +24,8 @@ Drive drive(In1,In2)
 void setup() {
     // Open serial communications
     Serial.begin(9600);
-    pinMode(enA, OUTPUT);
+    pinMode(EnA, OUTPUT);
+    pinMode(13,INPUT_PULLUP);
     Wire.begin();
     mpu6050.begin();
     mpu6050.calcGyroOffsets(true);
@@ -32,7 +36,17 @@ void setup() {
 void loop() {
     //mpu data retrieval
     mpu6050.update();
-   Serial.print(mpu6050.getAngleX());
-//    Serial.print(mpu6050.getAngleY());
-//    Serial.println(mpu6050.getAngleZ());
+    Serial.print(mpu6050.getAngleX());
+//     Serial.print(mpu6050.getAngleY());
+//     Serial.println(mpu6050.getAngleZ());
+
+    int button = digitalRead(13);
+    if(button == HIGH){
+      toggle = !toggle;
+    }
+    while(toggle){
+      digitalWrite(EnA,HIGH);
+      drive.moveForward(500);
+    }
+    
 }
