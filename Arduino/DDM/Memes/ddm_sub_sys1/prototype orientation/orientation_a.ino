@@ -1,17 +1,17 @@
 #include <MPU6050_tockn.h>
 #include <Wire.h>
-#include <Drive.h>
+#include <L298N.h>
 #include <AutoPID.h>
 
-#define EnA 9
-const int IN1 = 6;
-const int IN2 = 7;
-const int IN3;
-const int IN4;
-boolean toggle = false;
+#define ENA 9
+#define IN1 10
+#define IN2 11
+#define enableButton 5
+
+int buttonState = 0;
 
 MPU6050 mpu6050(Wire);
-Drive drive(IN1,IN2,IN3,IN4);
+L298N orientationMotor(ENA, IN1, IN2);
 
 /*
  * 6055 pins:
@@ -24,29 +24,24 @@ Drive drive(IN1,IN2,IN3,IN4);
 void setup() {
     // Open serial communications
     Serial.begin(9600);
-    pinMode(EnA, OUTPUT);
-    pinMode(13,INPUT_PULLUP);
+    pinMode(enableButton,INPUT);
     Wire.begin();
     mpu6050.begin();
     mpu6050.calcGyroOffsets(true);
-    
+    orientationMotor.setSpeed(50);
 
 }
 
 void loop() {
     //mpu data retrieval
     mpu6050.update();
-    Serial.print(mpu6050.getAngleX());
-//     Serial.print(mpu6050.getAngleY());
+    Serial.println(mpu6050.getAngleY());
+//     Serial.print(mpu6050.getAngleX());
 //     Serial.println(mpu6050.getAngleZ());
 
-    int button = digitalRead(13);
-    if(button == HIGH){
-      toggle = !toggle;
-    }
-    while(toggle){
-      digitalWrite(EnA,HIGH);
-      drive.moveForward(500);
+    buttonState = digitalRead(enableButton);
+    while(buttonState == HIGH){
+        orientationMotor.forward();
     }
     
 }
