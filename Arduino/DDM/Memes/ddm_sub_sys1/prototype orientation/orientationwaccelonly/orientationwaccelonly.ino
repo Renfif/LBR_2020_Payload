@@ -1,7 +1,6 @@
 #include <SparkFun_MMA8452Q.h>
 #include <BTS7960.h>
 #include <Wire.h>
-#include <AutoPID.h>
 
 MMA8452Q accel;
 
@@ -31,8 +30,8 @@ void loop() {
       float roll=atan2(accel.getX(),accel.getZ())*180/3.141592654;
       float error = 0 - roll;
       Serial.println(roll);
-//      if(error != 0){
-        if (-5<error<5){
+        if(error != 0){
+//        if (-5<error<5){
         if(int(error < 0)){
             orientationMotor.Enable();
             orientationMotor.TurnLeft(7);
