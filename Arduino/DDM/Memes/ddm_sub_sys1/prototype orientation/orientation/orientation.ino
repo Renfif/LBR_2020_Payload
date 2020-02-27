@@ -25,7 +25,13 @@ void setup() {
     Serial.begin(9600);
     Wire.begin();
     mpu6050.begin();
-    mpu6050.calcGyroOffsets(true);
+//    mpu6050.calcGyroOffsets(true);
+    mpu6050.setGyroOffsets(-1.33,-1.98,-1.87);
+    //offsets:
+//  X : -1.33
+//  Y : -1.98
+//  Z : -1.87
+
 
 }
 
@@ -35,18 +41,20 @@ void loop() {
     Serial.println(mpu6050.getAngleY());
     //rotating using that value
     //error = 0 - currentPos ; <-- error = negative current pos, so while the motor should run in the desired direction whenever its not equal to zero or in the meantime on the test jig should rotate clockwise if the value is positive & counterclockwise if negative until its zero again.
-//    if(){
-//      orientationMotor.Enable();
-//      
-//      while (0-(mpu6050.getAngleY()) > 0){
-//          orientationMotor.TurnLeft();
-//        }
-//      while (0-(mpu6050.getAngleY()) < 0){
-//          orientationMotor.TurnRight();
-//        }
-//    }
-//    else{
-//      orientationMotor.Stop();
-//      }
+    //float roll=atan2(mpu6050.getAccX(),mpu6050.getAccZ())*180/3.141592654;
+    float roll = mpu6050.getAngleY();
+    float error = 0 - roll;
+
+      if(int(error)< 0){
+          orientationMotor.Enable();
+          orientationMotor.TurnLeft(7);
+        }
+      if(int(error) > 0){
+          orientationMotor.Enable();
+          orientationMotor.TurnRight(7);
+        }
+      else{
+        orientationMotor.Stop();
+        }
     
 }
